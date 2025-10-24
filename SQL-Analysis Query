@@ -1,0 +1,43 @@
+-- Total Sales and Profit
+SELECT SUM(d.Amount) AS Total_Sales, SUM(d.Profit) AS Total_Profit
+FROM details d;
+
+-- Sales by Category
+SELECT d.Category, SUM(d.Amount) AS Total_Sales, SUM(d.Profit) AS Total_Profit
+FROM details d
+GROUP BY d.Category
+ORDER BY Total_Sales DESC;
+
+-- Top Customers by Revenue
+SELECT o.customer_Name, SUM(d.Amount) AS Total_Sales, SUM(d.Profit) AS Total_Profit
+FROM orders o
+JOIN details d ON o.order_id = d.order_id
+GROUP BY o.Customer_Name
+ORDER BY Total_Sales DESC
+LIMIT 10;
+
+-- Sales by Region / State / City
+SELECT o.State, o.City, SUM(d.Amount) AS Total_Sales, SUM(d.Profit) AS Total_Profit
+FROM orders o
+JOIN details d ON o.Order_ID = d.Order_ID
+GROUP BY o.State, o.City
+ORDER BY Total_Sales DESC;
+
+-- Monthly Sales Trend
+SELECT TO_CHAR(o.Order_Date, 'YYYY-MM') AS Month, SUM(d.Amount) AS Total_Sales
+FROM orders o
+JOIN details d ON o.Order_ID = d.Order_ID
+GROUP BY Month
+ORDER BY Month;
+
+-- Quantity Sold by Category
+SELECT d.Category, SUM(d.Quantity) AS Total_Quantity
+FROM details d
+GROUP BY d.Category
+ORDER BY Total_Quantity DESC;
+
+-- Payment Mode Analysis
+SELECT d.Payment_Mode, SUM(d.Amount) AS Total_Sales, SUM(d.Profit) AS Total_Profit
+FROM details d
+GROUP BY d.Payment_Mode
+ORDER BY Total_Sales DESC;
